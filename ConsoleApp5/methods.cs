@@ -17,7 +17,6 @@ namespace ConsoleApp5
         {
             connectionString = $"Data Source={dbFilePath};Version=3;";
         }
-
         public void CreateTables()
         {
             using (var connection = new SQLiteConnection(connectionString))
@@ -44,9 +43,6 @@ namespace ConsoleApp5
                 }
             }
         }
-
-
-
         public List<Artist> SearchArtists(string query)
         {
             List<Artist> artists = new List<Artist>();
@@ -80,7 +76,6 @@ namespace ConsoleApp5
             }
             else return artists;
         }
-
         public List<Album> GetAlbums()
         {
             List<Album> albums = new List<Album>();
@@ -110,9 +105,6 @@ namespace ConsoleApp5
 
             return albums;
         }
-
-
-
         public List<Artist> GetAllArtists()
         {
             List<Artist> artists = new List<Artist>();
@@ -141,7 +133,6 @@ namespace ConsoleApp5
 
             return artists;
         }
-
         public void PrintAllArtists()
         {
             List<Artist> allArtists = GetAllArtists();
@@ -152,7 +143,6 @@ namespace ConsoleApp5
                 Console.WriteLine($"ID: {artist.ID}, Артист: {artist.Name}");
             }
         }
-
         public List<Album> SearchAlbums(string query)
         {
             List<Album> albums = new List<Album>();
@@ -186,10 +176,12 @@ namespace ConsoleApp5
                     }
                 }
             }
-            return albums;
+            if (albums.Count == 0)
+            {
+                return null;
+            }
+            else return albums;
         }
-
-
 
         public void Footer()
         {
