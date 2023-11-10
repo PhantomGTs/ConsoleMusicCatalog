@@ -30,7 +30,8 @@ class Program
                     Console.Clear();
                     break;
                 case "2":
-                    Console.WriteLine("Введите имя автора для поиска");
+                    Console.WriteLine("Нажми ENTER чтобы показать все песни.");
+                    Console.WriteLine("Введите имя автора для поиска:");
                     DataSearch = Console.ReadLine();
                     List<Artist> artistResults = catalog.SearchArtists(DataSearch);
                     Console.WriteLine("Результат поиска:");
@@ -50,7 +51,8 @@ class Program
                     DataSearch = null;
                     break;
                 case "3":
-                    Console.WriteLine("Введите название для поиска");
+                    Console.WriteLine("Нажми ENTER чтобы показать все песни.");
+                    Console.WriteLine("Введите название песни для поиска:");
                     DataSearch = Console.ReadLine();
                     List<Album> albumResults = catalog.SearchAlbums(DataSearch);
                     Console.WriteLine("Результат поиска:");
@@ -70,7 +72,27 @@ class Program
                     DataSearch = null;
                     break;
                 case "4":
-
+                    Console.WriteLine("Нажми ENTER чтобы показать все песни.");
+                    Console.WriteLine("Введите жанр для поиска:");
+                    DataSearch = Console.ReadLine();
+                    List<Song> SongResults = catalog.GetSongsByGenre(DataSearch);
+                    Console.WriteLine("Результат поиска:");
+                    if (SongResults == null)
+                    {
+                        Console.Write("Ничего не найдено");
+                    }
+                    else
+                    {
+                        foreach (var songs in SongResults)
+                        {
+                            Console.WriteLine($"ID: {songs.ID}, Название: {songs.Title}, Исполнитель: {songs.ArtistName}, Альбом: {songs.AlbumName}, Жанр: {songs.Genre}");
+                        }
+                    }
+                    
+                    Console.ReadKey();
+                    Console.Clear();
+                    DataSearch = null;
+                    break;
                     break;
                 case null:
                     catalog.Error();

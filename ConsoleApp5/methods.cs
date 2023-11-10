@@ -183,6 +183,60 @@ namespace ConsoleApp5
             else return albums;
         }
 
+        public List<Song> GetSongsByGenre(string genre)
+        {
+            List<Song> songs = new List<Song>();
+
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+
+                string selectSongsByGenre = @"
+            SELECT
+                Albums.ID AS AlbumID,
+                Albums.Title AS AlbumTitle,
+                Artists.ID AS ArtistID,
+                Artists.Name AS ArtistName,
+                Songs.ID AS SongID,
+                Songs.Title AS SongTitle,
+                Songs.Genre
+            FROM
+                Albums
+            JOIN
+                Artists ON Albums.ArtistID = Artists.ID
+            JOIN
+                Songs ON Albums.ID = Songs.AlbumID
+            WHERE
+                Songs.Genre LIKE @Genre";
+
+                using (var command = new SQLiteCommand(selectSongsByGenre, connection))
+                {
+                    command.Parameters.AddWithValue("@Genre", $"%{genre}%");
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            songs.Add(new Song
+                            {
+                                ID = Convert.ToInt32(reader["SongID"]),
+                                Title = reader["SongTitle"].ToString(),
+                                AlbumID = Convert.ToInt32(reader["AlbumID"]),
+                                Genre = reader["Genre"].ToString(),
+                                AlbumName = reader["AlbumTitle"].ToString(),
+                                ArtistName = reader["ArtistName"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+            if (songs.Count == 0)
+            {
+                return null;
+            }
+            else return songs;
+        }
+
         public void Footer()
         {
             Console.WriteLine("МУЗЫКАЛЬНЫЙ КАТАЛОГ");

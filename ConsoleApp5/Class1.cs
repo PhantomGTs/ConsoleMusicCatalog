@@ -27,5 +27,7 @@ namespace ConsoleApp5
         public string Title { get; set; }
         public int AlbumID { get; set; }
         public string Genre { get; set; }
-    }
+        public string AlbumName { get; set; }
+        public string ArtistName { get; set;}
+}
 }
