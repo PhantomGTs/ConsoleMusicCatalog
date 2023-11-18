@@ -33,17 +33,25 @@ class Program
                     Console.WriteLine("Нажми ENTER чтобы показать все песни.");
                     Console.WriteLine("Введите имя автора для поиска:");
                     DataSearch = Console.ReadLine();
-                    List<Artist> artistResults = catalog.SearchArtists(DataSearch);
-                    Console.WriteLine("Результат поиска:");
-                    if(artistResults == null) 
+                    if (string.IsNullOrWhiteSpace(DataSearch))
                     {
-                        Console.Write("Ничего не найдено");
+                        Console.WriteLine("Вы ввели пустую строку. Повторите ввод.");
                     }
                     else
                     {
-                        foreach (var artist in artistResults)
+                        DataSearch = char.ToUpper(DataSearch[0]) + DataSearch.Substring(1).ToLower();
+                        List<Artist> artistResults = catalog.SearchArtists(DataSearch);
+                        Console.WriteLine("Результат поиска:");
+                        if (artistResults == null)
                         {
-                            Console.WriteLine($"ID: {artist.ID}, Имя: {artist.Name}");
+                            Console.Write("Ничего не найдено");
+                        }
+                        else
+                        {
+                            foreach (var artist in artistResults)
+                            {
+                                Console.WriteLine($"ID: {artist.ID}, Имя: {artist.Name}");
+                            }
                         }
                     }
                     Console.ReadKey();
@@ -54,17 +62,25 @@ class Program
                     Console.WriteLine("Нажми ENTER чтобы показать все песни.");
                     Console.WriteLine("Введите название песни для поиска:");
                     DataSearch = Console.ReadLine();
-                    List<Album> albumResults = catalog.SearchAlbums(DataSearch);
-                    Console.WriteLine("Результат поиска:");
-                    if (albumResults == null)
+                    if (string.IsNullOrWhiteSpace(DataSearch))
                     {
-                        Console.Write("Ничего не найдено");
+                        Console.WriteLine("Вы ввели пустую строку. Повторите ввод.");
                     }
                     else
                     {
-                        foreach (var albums in albumResults)
+                        DataSearch = char.ToUpper(DataSearch[0]) + DataSearch.Substring(1).ToLower();
+                        List<Album> albumResults = catalog.SearchAlbums(DataSearch);
+                        Console.WriteLine("Результат поиска:");
+                        if (albumResults == null)
                         {
-                            Console.WriteLine($"ID: {albums.ID}, Название: {albums.Title}, Исполнитель: {albums.ArtistName}");
+                            Console.Write("Ничего не найдено");
+                        }
+                        else
+                        {
+                            foreach (var albums in albumResults)
+                            {
+                                Console.WriteLine($"ID: {albums.ID}, Название: {albums.Title}, Исполнитель: {albums.ArtistName}");
+                            }
                         }
                     }
                     Console.ReadKey();
@@ -75,19 +91,29 @@ class Program
                     Console.WriteLine("Нажми ENTER чтобы показать все песни.");
                     Console.WriteLine("Введите жанр для поиска:");
                     DataSearch = Console.ReadLine();
-                    List<Song> SongResults = catalog.GetSongsByGenre(DataSearch);
-                    Console.WriteLine("Результат поиска:");
-                    if (SongResults == null)
+                    if (string.IsNullOrWhiteSpace(DataSearch))
                     {
-                        Console.Write("Ничего не найдено");
+                        Console.WriteLine("Вы ввели пустую строку. Повторите ввод.");
                     }
                     else
                     {
-                        foreach (var songs in SongResults)
+                        DataSearch = char.ToUpper(DataSearch[0]) + DataSearch.Substring(1).ToLower();
+                        List<Song> SongResults = catalog.GetSongsByGenre(DataSearch);
+                        Console.WriteLine("Результат поиска:");
+
+                        if (SongResults == null)
                         {
-                            Console.WriteLine($"ID: {songs.ID}, Название: {songs.Title}, Исполнитель: {songs.ArtistName}, Альбом: {songs.AlbumName}, Жанр: {songs.Genre}");
+                            Console.Write("Ничего не найдено");
+                        }
+                        else
+                        {
+                            foreach (var songs in SongResults)
+                            {
+                                Console.WriteLine($"ID: {songs.ID}, Название: {songs.Title}, Исполнитель: {songs.ArtistName}, Альбом: {songs.AlbumName}, Жанр: {songs.Genre}");
+                            }
                         }
                     }
+
                     
                     Console.ReadKey();
                     Console.Clear();

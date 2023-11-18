@@ -192,22 +192,22 @@ namespace ConsoleApp5
                 connection.Open();
 
                 string selectSongsByGenre = @"
-            SELECT
-                Albums.ID AS AlbumID,
-                Albums.Title AS AlbumTitle,
-                Artists.ID AS ArtistID,
-                Artists.Name AS ArtistName,
-                Songs.ID AS SongID,
-                Songs.Title AS SongTitle,
-                Songs.Genre
-            FROM
-                Albums
-            JOIN
-                Artists ON Albums.ArtistID = Artists.ID
-            JOIN
-                Songs ON Albums.ID = Songs.AlbumID
-            WHERE
-                Songs.Genre LIKE @Genre";
+                SELECT
+                    Albums.ID AS AlbumID,
+                    Albums.Title AS AlbumTitle,
+                    Artists.ID AS ArtistID,
+                    Artists.Name AS ArtistName,
+                    Songs.ID AS SongID,
+                    Songs.Title AS SongTitle,
+                    Songs.Genre
+                FROM
+                    Albums
+                JOIN
+                    Artists ON Albums.ArtistID = Artists.ID
+                JOIN
+                    Songs ON Albums.ID = Songs.AlbumID
+                WHERE
+                    Songs.Genre COLLATE NOCASE LIKE @Genre";
 
                 using (var command = new SQLiteCommand(selectSongsByGenre, connection))
                 {
@@ -230,11 +230,15 @@ namespace ConsoleApp5
                     }
                 }
             }
+
             if (songs.Count == 0)
             {
                 return null;
             }
-            else return songs;
+            else
+            {
+                return songs;
+            }
         }
 
         public void Footer()
